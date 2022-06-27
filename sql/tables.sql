@@ -1,14 +1,14 @@
 create table Users(
-    UsersID serial not null primary key,
+    id serial not null primary key,
     Firstname text,
     Lastname text,
     username varchar,
-    pass varchar,
+    pass varchar
 );
 
 create table Favourites(
-    FavouritesID serial not null primary key,
+    id serial not null primary key,
     movies varchar,
-    PRIMARY KEY (FavouritesID),
-    FOREIGN KEY (UsersID) REFERENCES Users(UsersID)
-)
+    users_id int,
+    FOREIGN KEY (users_id) REFERENCES Users(id)
+);
