@@ -8,8 +8,6 @@ const api = (app, db) => {
 
         let useraccount = await db.oneOrNone('select * from users where username = $1', [username])
 
-        // await db.oneOrNone('insert into users (firstname, lastname, username, pass) values($1, $2)');
-
         if(useraccount !== null){
             res.json({
                 message: 'User already exist please login with the username and password',
