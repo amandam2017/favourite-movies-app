@@ -58,10 +58,38 @@ const api = (app, db) => {
 
     })
 
-    // app.post('/api/playlist', async function(req, res){
-    //     const user = req.body
+    const authanticateToken = (req, res, next) => {
+        // inside this function we want to get the token that is generated/sent to us and to verify if this is the correct user.
+        const authHeader = req.headers['authorization']
+        // console.log({authHeader});
+        const token = jwt.sign(user, 'secretKey', { expiresIn: '24h' });
+        // if theres no token tell me
+        if (token === null) return res.sendStatus(401)
+        // if there is then verify if its the correct user using token if not return the error
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, username) => {
+            // console.log(err);
+            if (err) return res.sendStatus(403)
+            console.log('show error' + err);
 
-    // })
+            req.username = username
+            console.log(username);
+            next()
+        })
+
+    }
+
+    app.post('/api/playlist', authanticateToken, async function (req, res) {
+        const { username } = req.body
+        await db.none('UPDATE Favourites SET movies = movies+1 WHERE username = $1', [username]);
+        const stored_movies = await storeFavourites(username)
+        const user = await db.oneOrNone('select * from Favourites where username = $1', [username])
+        console.log({user, username});
+
+        res.json({
+            stored_movies,
+            user
+        })
+    })
 
 }
 
