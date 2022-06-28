@@ -34,16 +34,16 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const pgp = PgPromise({});
 
 const config = {
-	connectionString: process.env.DATABASE_URL || 'postgres://amanda:@262632@localhost:5432/hearts_app',
-	// max: 30,
+	connectionString: process.env.DATABASE_URL || 'postgres://amanda:@262632@localhost:5432/moviesapis',
+
 	ssl:{ rejectUnauthorized : false}
  };
  
  const db = pgp(config);
 
-// API(app, db);
+API(app, db);
 
-const PORT = process.env.PORT || 2022;
+const PORT = process.env.PORT || 2023;
 
 app.listen(PORT, function () {
 	console.log(`App started on port ${PORT}`)
