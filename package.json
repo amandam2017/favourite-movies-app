@@ -2,10 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "app.js",
-    "test": "index.js"
+    "start": "index.js"
   },
   "keywords": [],
   "author": "",
