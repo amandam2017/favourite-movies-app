@@ -58,6 +58,11 @@ const api = (app, db) => {
 
     })
 
+    // app.post('/api/playlist', async function(req, res){
+    //     const user = req.body
+
+    // })
+
 }
 
 module.exports = api;
