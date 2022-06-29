@@ -78,17 +78,26 @@ const api = (app, db) => {
         })
 
     }
+    
 
-    app.post('/api/playlist', authanticateToken, async function (req, res) {
-        const { username } = req.body
-        await db.none('UPDATE Favourites SET movies = movies+1 WHERE username = $1', [username]);
-        // const stored_movies = await storeFavourites(username)
-        const user = await db.oneOrNone('select * from Favourites where username = $1', [username])
-        console.log({user, username});
+    app.post('/api/playlist', async function (req, res) {
+        const { movies, userid } = req.body
+
+
+        console.log(req.body);
+        // console.log(movies);
+        // console.log(userid);
+
+        let user = await db.none('insert into favourites (users_id, movies) values ($1, $2)', [movies,userid]);
+        if(user !== null){
+            await db.oneOrNone('select * from avourites where users_id = $1', [movies,userid])
+            console.log(user);
+        }
+        // await db.none('UPDATE Favourites SET movies = movies+1 WHERE users_id = $1', [movies]);
+        // console.log({user, username});
 
         res.json({
-            // stored_movies,
-            user
+            data:user
         })
     })
 
