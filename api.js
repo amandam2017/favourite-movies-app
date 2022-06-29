@@ -49,8 +49,9 @@ const api = (app, db) => {
                 const user_token = jwt.sign(user, 'secretKey', { expiresIn: '24h' });
 
                 res.json({
-                    data:user_token,
-                    message: `Hello ${username}`
+                    user,
+                    message: `Hello ${username}`,
+                    data:user_token
                 })
 
             }
@@ -81,12 +82,12 @@ const api = (app, db) => {
     app.post('/api/playlist', authanticateToken, async function (req, res) {
         const { username } = req.body
         await db.none('UPDATE Favourites SET movies = movies+1 WHERE username = $1', [username]);
-        const stored_movies = await storeFavourites(username)
+        // const stored_movies = await storeFavourites(username)
         const user = await db.oneOrNone('select * from Favourites where username = $1', [username])
         console.log({user, username});
 
         res.json({
-            stored_movies,
+            // stored_movies,
             user
         })
     })
