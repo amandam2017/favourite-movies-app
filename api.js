@@ -30,7 +30,8 @@ const api = (app, db) => {
     app.post('/api/login', async function(req, res){
         const {username, password} = req.body
 
-        let user = await db.oneOrNone('select * from users where username = $1', [username])
+        const user = await db.oneOrNone('select * from users where username = $1', [username])
+        
         if(user == null){
             res.json({
                 message: 'Username does not exists, please signup',
@@ -46,17 +47,39 @@ const api = (app, db) => {
                     status: 402
                 })
             }else{
-                const user_token = jwt.sign(user, 'secretKey', { expiresIn: '24h' });
+                const user_token = jwt.sign({user}, 'secretKey', { expiresIn: '24h' });
 
                 res.json({
-                    user,
-                    message: `Hello ${username}`,
-                    data:user_token
+                    user:user,
+                    message: `Hello ${user.firstname}`,
+                    token:user_token
                 })
 
             }
         }
 
+    })
+
+    app.post('/api/playlist', async function (req, res) {
+        // const { username } = req.body
+        const { username, movie } = req.body
+        // console.log(req.body);
+        // console.log(username);
+        // console.log(movie.title);
+
+        
+        const user = await db.oneOrNone('select * from users where username = $1', [username])
+  
+        // if(user !== null){
+            await db.manyOrNone('insert into favourites (movies,users_id) values ($1, $2)', [movie,username.id]);
+
+        // }
+        // console.log(username.id);
+        // console.log('movies?'+movie);
+
+        res.json({
+            user:user
+        })
     })
 
     const authanticateToken = (req, res, next) => {
@@ -78,28 +101,6 @@ const api = (app, db) => {
         })
 
     }
-    
-
-    app.post('/api/playlist', async function (req, res) {
-        const { movies, userid } = req.body
-
-
-        console.log(req.body);
-        // console.log(movies);
-        // console.log(userid);
-
-        let user = await db.none('insert into favourites (users_id, movies) values ($1, $2)', [movies,userid]);
-        if(user !== null){
-            await db.oneOrNone('select * from avourites where users_id = $1', [movies,userid])
-            console.log(user);
-        }
-        // await db.none('UPDATE Favourites SET movies = movies+1 WHERE users_id = $1', [movies]);
-        // console.log({user, username});
-
-        res.json({
-            data:user
-        })
-    })
 
 }
 
