@@ -61,46 +61,36 @@ const api = (app, db) => {
     })
 
     app.post('/api/playlist', async function (req, res) {
-        // const { username } = req.body
         const { username, movie } = req.body
-        // console.log(req.body);
-        // console.log(username);
-        // console.log(movie.title);
 
+        // console.log(req.body);
         
         const user = await db.oneOrNone('select * from users where username = $1', [username])
-  
-        // if(user !== null){
+
             await db.manyOrNone('insert into favourites (movies,users_id) values ($1, $2)', [movie,username.id]);
-
-        // }
-        // console.log(username.id);
-        // console.log('movies?'+movie);
-
+        // console.log({user, username});
         res.json({
             user:user
         })
     })
 
-    const authanticateToken = (req, res, next) => {
-        // inside this function we want to get the token that is generated/sent to us and to verify if this is the correct user.
-        const authHeader = req.headers['authorization']
-        // console.log({authHeader});
-        const token = jwt.sign(user, 'secretKey', { expiresIn: '24h' });
-        // if theres no token tell me
-        if (token === null) return res.sendStatus(401)
-        // if there is then verify if its the correct user using token if not return the error
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, username) => {
-            // console.log(err);
-            if (err) return res.sendStatus(403)
-            console.log('show error' + err);
+    app.get('/api/playlist/:id', async function (req, res){
+        const { id } = req.params
+        // console.log({id});
+        const results = await db.manyOrNone(`select * from favourites WHERE users_id = $1`,[id])
 
-            req.username = username
-            console.log(username);
-            next()
+        res.json({
+            data:results
         })
 
-    }
+    })
+
+    app.get('/api/playlist', async function (req, res) {
+		const result = await db.many(`select count(*), gender FROM garment GROUP BY gender ORDER BY count ASC`);
+		res.json({
+			data: result
+		})
+	});
 
 }
 
