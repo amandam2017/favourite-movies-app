@@ -68,7 +68,6 @@ const api = (app, db) => {
         const user = await db.oneOrNone('select * from users where username = $1', [username])
 
             await db.manyOrNone('insert into favourites (movies,users_id) values ($1, $2)', [movie,username.id]);
-        // console.log({user, username});
         res.json({
             user:user
         })
