@@ -30,22 +30,16 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// const DATABASE_URL = process.env.DATABASE_URL;
+const DATABASE_URL = process.env.DATABASE_URL;
 const pgp = PgPromise({});
 
-const DATABASE_URL= process.env.DATABASE_URL || "postgres://amanda:@262632@localhost:5432/moviesapis";
+const config = {
+	connectionString: process.env.DATABASE_URL || 'postgres://amanda:@262632@localhost:5432/moviesapis',
 
-const config = { 
-	connectionString : DATABASE_URL
-}
-
-if (process.env.NODE_ENV == 'production') {
-	config.ssl = { 
-		rejectUnauthorized : false
-	}
-}
-
-const db = pgp(config);
+	ssl:{ rejectUnauthorized : false}
+ };
+ 
+ const db = pgp(config);
 
 API(app, db);
 
