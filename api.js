@@ -67,7 +67,8 @@ const api = (app, db) => {
         
         const user = await db.oneOrNone('select * from users where username = $1', [username])
 
-            await db.manyOrNone('insert into favourites (movies,users_id) values ($1, $2)', [movie,username.id]);
+            await db.manyOrNone('insert into favourites (movies,users_id) values ($1, $2)', [movie,user.id]);
+        console.log({user, username});
         res.json({
             user:user
         })
@@ -83,13 +84,6 @@ const api = (app, db) => {
         })
 
     })
-
-    app.get('/api/playlist', async function (req, res) {
-		const result = await db.many(`select count(*), gender FROM garment GROUP BY gender ORDER BY count ASC`);
-		res.json({
-			data: result
-		})
-	});
 
 }
 
