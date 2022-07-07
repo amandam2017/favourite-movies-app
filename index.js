@@ -15,7 +15,6 @@ const app = express();
 // THE CORES ARE ADDED FOR HEROKU AND THEY ARE USED ON ALL MY ROUTES
 const cors = require('cors');
 app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "https://favourite-movies-app.herokuapp.com/");
 	res.setHeader("Access-Control-Allow-Origin", "https://amandam2017.github.io/favourite-movies-app/");
 	res.header(
 	  "Access-Control-Allow-Headers",
