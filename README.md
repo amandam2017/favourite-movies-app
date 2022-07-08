@@ -5,9 +5,8 @@
 -Log the registered user
 -Returning messages when user tries to login
 display user's favourite movies
+-I can log the user out
 
 
 #What still need to be done?
--I need to work on styling 
--add a logout button
--adding tests
+-work on test, I only have and its failing
