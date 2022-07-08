@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  <script type="module" crossorigin src="/favourite-movies-app/assets/index.581d9e67.js"></script>
+  <link rel="stylesheet" href="/favourite-movies-app/assets/index.fb6876a3.css">
+</head>
+
+<body>
+    <div x-data="moviesapis" class="container">
+
+        <hr>
+        <div class="row">
+            <div class="col-md-6" x-data="{ signup: false }">
+                <div x-data="{ open: false }">
+                    <h4>Already have an account? Login below</h4>
+                    <div class="text-center">
+                        <button class="btn btn-secondary" x-on:click="open = ! open">Login</button>
+
+                    </div>
+
+                    <div class="login" x-show="open">
+                        <span x-text="displayUser"></span>
+                        <div x-text="welcome_message" class="welcome_message"></div>
+                        <div class="col-md-3">
+                            <labe>Username</labe>
+                            <input x-model="user" type="text" />
+                        </div>
+                        <div class="col-md-3">
+                            <labe>Password</labe>
+                            <input x-model="pass" type="password"/>
+                            <div>
+                                <button class="btn btn-secondary" @click="login()">submit</button>
+                            </div>
+                            <div>
+                                <button class="btn btn-info" @click="logout()">Logout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group signup">
+                <div x-data="{ openSignUp: false }">
+                    <h4>Sign up if you don't have account</h4>
+                    <div class="text-center">
+                        <button class="btn btn-secondary" x-on:click="openSignUp = ! openSignUp">Signup</button>
+                    </div>
+                    <div class="sinup" x-show="openSignUp">
+                        <span x-text="feedback_message" class="feedback_message"></span>
+                        <span x-text="error_message" class="error_message"></span>
+                        <div class="col-md-3">
+                            <labe>First Name</labe>
+                            <input x-model="firstname" type="text" />
+                        </div>
+                        <div class="col-md-3">
+                            <labe>Last Name</labe>
+                            <input x-model="lastname" type="text" />
+                        </div>
+                        <div class="col-md-3">
+                            <labe>Username</labe>
+                            <input x-model="username" type="text" />
+                        </div>
+                        <div class="col-md-3">
+                            <labe>Password</labe>
+                            <input x-model="password" type="password" />
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-secondary" @click="signup()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <span>Not registered? click the button to signup</span>
+                <button @click="signup = !signup" :aria-expanded="signup ? 'true' : 'false'">Signup Now</button>
+        </div> -->
+        <div class="row">
+
+        </div>
+        <hr>
+        <div class="movies" x-show="loggedIn">
+            <h2>Search Movies by names</h2>
+
+            <div class="serach">
+                <input type="search" x-model="movie">
+                <button @click="MoviData()">search</button>
+            </div>
+            <template x-for="film in movies_results">
+                <div class="col-md-3 film_container">
+                    <div>
+                        <div>
+                            Title<span x-text="film.title"></span>
+                        </div>
+                        <div>
+                            <img x-bind:src="`https://image.tmdb.org/t/p/w500${film.poster_path}`">
+                        </div>
+                        <button @click="storeFavourites(film)">ADD</button>
+                    </div>
+                </div>
+            </template>
+
+            <h2>Favourites Movies</h2>
+
+            <div>
+                <button @click="getFilms()">DisplayMovies</button>
+            </div>
+            <template x-for="user_film in displayUserFilms">
+                <div class="col-md-3 film_container">
+                    <span x-text="user_film.title"></span>
+
+                    <img x-bind:src="`https://image.tmdb.org/t/p/w500${user_film.image}`">
+                </div>
+            </template>
+        </div>
+        <!-- <div class="row">
+            
+        </div> -->
+    </div>
+    
+</body>
+
+</html>
