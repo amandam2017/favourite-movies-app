@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 const api = (app, db) => {
+    app.get('/test', (req, res) => res.json({ username: 'amish' }))
     app.post('/api/signup', async function(req, res){
         const {firstname, lastname, username, password} = req.body
 

@@ -9,6 +9,6 @@ create table Users(
 create table Favourites(
     id serial not null primary key,
     movies varchar,
-    users_id varchar,
+    users_id int,
     FOREIGN KEY (users_id) REFERENCES Users(id)
 );

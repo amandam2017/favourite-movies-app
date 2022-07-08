@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,10 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
-    "pg-promise": "^10.11.1"
+    "pg-promise": "^10.11.1",
+    "supertest": "^6.2.4"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
   }
 }
