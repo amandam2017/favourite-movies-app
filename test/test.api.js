@@ -51,11 +51,40 @@ describe('The users API', function () {
 			username: 'amish',
 			password: 'ama123',
 		}
-		assert.equal(1, users.length);
+		
+		assert.equal(4, Object.keys(users).length);
 
 	})
 
-	
+	it('should be able find the user with the registered username', async () => {
+		const response = await supertest(app)
+			.post('/api/signup')
+			.expect(200);
+
+		const users = {
+			firstname: 'amanda',
+			lastname: 'maarman',
+			username: 'amish',
+			password: 'ama123',
+		}
+		
+		assert.equal('amish', users.username);
+
+	})
+
+	it('should be able find the users password', async () => {
+		const response = await supertest(app)
+			.post('/api/login')
+			.expect(200);
+
+		const users = {
+			username: 'amish',
+			password: 'ama123',
+		}
+		
+		assert.equal('ama123', users.password);
+
+	})
 
 
 	after(() => {

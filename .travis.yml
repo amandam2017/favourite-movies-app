@@ -1,0 +1,17 @@
+language: node_js
+
+node_js:
+  - "v12"
+
+env:
+  - DATABASE_URL=postgresql://postgres@localhost:5432/moviapis_tests;
+
+before_script:
+  - npm install
+  - psql -c 'create database  moviapis_tests' -U postgres
+  - psql -U postgres -d moviapis_tests -a -f sql/tables.sql
+  # - psql -U postgres -d moviapis_tests -a -f sql/data.sql
+
+
+services:
+  - postgresql  

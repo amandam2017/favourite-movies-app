@@ -86,6 +86,26 @@ const api = (app, db) => {
 
     })
 
+    app.delete('/api/playlist/:id', async function (req, res) {
+
+		try {
+			const { id } = req.params;
+			// delete the garments with the specified gender
+			const results = await db.none(`delete from favourites where id = $1`, [id]);
+			// console.log(results);
+			res.json({
+				status: 'success',
+				data: results
+			})
+		} catch (err) {
+			console.log(err);
+			res.json({
+				status: 'success',
+				error: err.stack
+			})
+		}
+	});
+
 }
 
 module.exports = api;
