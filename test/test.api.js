@@ -12,11 +12,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-const DATABASE_URL = 'postgres://amanda:@262632@localhost:5432/moviapis_tests';
-// const {connectionString} = process.env.DATABASE_URL
+const DATABASE_URL_TEST = 'postgres://amanda:@262632@localhost:5432/moviapis_tests';
+const {connectionString} = process.env.DATABASE_URL_TEST
 
 const pgp = PgPromise({});
-const db = pgp(DATABASE_URL);
+const db = pgp(DATABASE_URL_TEST);
 
 API(app, db);
 
