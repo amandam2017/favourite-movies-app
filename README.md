@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/amandam2017/favourite-movies-app.svg?branch=main)](https://app.travis-ci.com/amandam2017/favourite-movies-app)
+
 # Movies App
 
 ## What is working?
