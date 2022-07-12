@@ -90,7 +90,6 @@ const api = (app, db) => {
 
 		try {
 			const { id } = req.params;
-			// delete the garments with the specified gender
 			const results = await db.none(`delete from favourites where id = $1`, [id]);
 			// console.log(results);
 			res.json({
