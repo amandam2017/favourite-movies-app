@@ -22,12 +22,12 @@ API(app, db);
 
 describe('The users API', function () {
 
-	// before(async function () {
-	// 	this.timeout(5000);
-	// 	await db.none(`delete from users`);
-	// 	const commandText = fs.readFileSync('./sql/data.sql', 'utf-8');
-	// 	await db.none(commandText)
-	// });
+	before(async function () {
+		this.timeout(5000);
+		await db.none(`delete from favourites`);
+		const commandText = fs.readFileSync('./sql/table.sql', 'utf-8');
+		await db.none(commandText)
+	});
 
 
 	it('should have a test method', async () => {
@@ -43,7 +43,7 @@ describe('The users API', function () {
 	it('should be able to find 3 registered users', async () => {
 		const response = await supertest(app)
 			.post('/api/signup')
-			// .expect(200);
+			.expect(200);
 
 		const users = {
 			firstname: 'amanda',
@@ -59,7 +59,7 @@ describe('The users API', function () {
 	it('should be able find the user with the registered username', async () => {
 		const response = await supertest(app)
 			.post('/api/signup')
-			// .expect(200);
+			.expect(200);
 
 		const users = {
 			firstname: 'amanda',
@@ -75,7 +75,7 @@ describe('The users API', function () {
 	it('should be able find the users password', async () => {
 		const response = await supertest(app)
 			.post('/api/login')
-			// .expect(200);
+			.expect(200);
 
 		const users = {
 			username: 'amish',
