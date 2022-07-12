@@ -22,12 +22,12 @@ API(app, db);
 
 describe('The users API', function () {
 
-	before(async function () {
-		this.timeout(5000);
-		await db.none(`delete from favourites`);
-		const commandText = fs.readFileSync('./sql/table.sql', 'utf-8');
-		await db.none(commandText)
-	});
+	// before(async function () {
+	// 	this.timeout(5000);
+	// 	await db.none(`delete from favourites`);
+	// 	const commandText = fs.readFileSync('./sql/table.sql', 'utf-8');
+	// 	await db.none(commandText)
+	// });
 
 
 	it('should have a test method', async () => {
